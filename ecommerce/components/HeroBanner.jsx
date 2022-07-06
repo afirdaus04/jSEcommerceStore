@@ -3,8 +3,10 @@ import Link from 'next/link';
 
 import { urlFor } from '../lib/client';
 
+// receiving heroBanner dynamic data with the purpose to display
 const HeroBanner = ({ heroBanner }) => {
   return (
+    // The front banner - the image ideally would be png with transparent background
     <div className="hero-banner-container">
       <div>
         <p className="beats-solo">{heroBanner.smallText}</p>
@@ -12,6 +14,7 @@ const HeroBanner = ({ heroBanner }) => {
         <h1>{heroBanner.largeText1}</h1>
         <img src={urlFor(heroBanner.image)} alt="headphones" className="hero-banner-image" />
 
+      {/* Links and Buttons for banner */}
         <div>
           <Link href={`/product/${heroBanner.product}`}>
             <button type="button">{heroBanner.buttonText}</button>
