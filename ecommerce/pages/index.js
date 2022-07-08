@@ -18,13 +18,15 @@ const Home = ({ products, bannerData }) => (
       {products?.map((product) => <Product key={product._id} product={product} />)}
     </div>
 
+
+    {/* Developing footer banner where if banner data exist, it is placed on the array of 0 */}
     <FooterBanner footerBanner={bannerData && bannerData[0]} />
   </div>
-  // 1.01.01 youtubetime
+  
 );
 
 
-// Fetching data using NextJS is by getServerSideProps function
+// Fetching data using NextJS is by getServerSideProps function - API Fetching
 export const getServerSideProps = async () => {
   // creation of sanity query for "products"
   const query = '*[_type == "product"]';

@@ -1,13 +1,18 @@
 import React from 'react';
 import { AiFillInstagram, AiOutlineTwitter} from 'react-icons/ai';
 
+
+// Create dynamic year command
+const yearNow = new Date().getFullYear();
+
 const Footer = () => {
   return (
     <div className="footer-container">
-      <p>2022 JSM Headphones All rights reserverd</p>
+      <div className="copyright">Ahmad's Store 2015-{yearNow}</div>
+      <p>All rights reserved</p>
       <p className="icons">
-        <AiFillInstagram />
-        <AiOutlineTwitter />
+        <AiFillInstagram onClick={() => {}} />
+        <AiOutlineTwitter onClick={() => {}} />
       </p>
     </div>
   )

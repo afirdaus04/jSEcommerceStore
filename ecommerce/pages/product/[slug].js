@@ -1,3 +1,5 @@
+// The folder is made is square brackets so it is dynamic
+
 import React, { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
@@ -5,7 +7,11 @@ import { client, urlFor } from '../../lib/client';
 import { Product } from '../../components';
 import { useStateContext } from '../../context/StateContext';
 
+
+// Changed the [slug] to product details for rendering
 const ProductDetails = ({ product, products }) => {
+
+  // Destructures props product
   const { image, name, details, price } = product;
   const [index, setIndex] = useState(0);
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
@@ -21,24 +27,31 @@ const ProductDetails = ({ product, products }) => {
       <div className="product-detail-container">
         <div>
           <div className="image-container">
+
+            {/* If image exist, use image under specific index */}
             <img src={urlFor(image && image[index])} className="product-detail-image" />
           </div>
           <div className="small-images-container">
+
+            {/* mapping of image */}
             {image?.map((item, i) => (
               <img 
                 key={i}
                 src={urlFor(item)}
                 className={i === index ? 'small-image selected-image' : 'small-image'}
+                // Allows mouse on hover image on image and display to the main frame
                 onMouseEnter={() => setIndex(i)}
               />
             ))}
           </div>
         </div>
-
+            
+            {/* Developing product detail description */}
         <div className="product-detail-desc">
           <h1>{name}</h1>
           <div className="reviews">
             <div>
+              {/* Rating stars for product */}
               <AiFillStar />
               <AiFillStar />
               <AiFillStar />
@@ -46,12 +59,14 @@ const ProductDetails = ({ product, products }) => {
               <AiOutlineStar />
             </div>
             <p>
+              {/* Number of reviews */}
               (20)
             </p>
           </div>
+          {/* Product details */}
           <h4>Details: </h4>
           <p>{details}</p>
-          <p className="price">${price}</p>
+          <p className="price">RM{price}</p>
           <div className="quantity">
             <h3>Quantity:</h3>
             <p className="quantity-desc">
@@ -60,17 +75,19 @@ const ProductDetails = ({ product, products }) => {
               <span className="plus" onClick={incQty}><AiOutlinePlus /></span>
             </p>
           </div>
+          {/* Add to Cart and Buy Now buttons development */}
           <div className="buttons">
             <button type="button" className="add-to-cart" onClick={() => onAdd(product, qty)}>Add to Cart</button>
             <button type="button" className="buy-now" onClick={handleBuyNow}>Buy Now</button>
           </div>
         </div>
       </div>
-
+            {/* Similar item development */}
       <div className="maylike-products-wrapper">
           <h2>You may also like</h2>
           <div className="marquee">
             <div className="maylike-products-container track">
+              {/* 1.37.18 - restudy */}
               {products.map((item) => (
                 <Product key={item._id} product={item} />
               ))}
@@ -81,6 +98,8 @@ const ProductDetails = ({ product, products }) => {
   )
 }
 
+// getStaticProps requires usage of getStaticPaths
+// Code below fetches all product and only display current slug property
 export const getStaticPaths = async () => {
   const query = `*[_type == "product"] {
     slug {
@@ -89,6 +108,7 @@ export const getStaticPaths = async () => {
   }
   `;
 
+  // 1.27.26 - restudy
   const products = await client.fetch(query);
 
   const paths = products.map((product) => ({
@@ -103,11 +123,21 @@ export const getStaticPaths = async () => {
   }
 }
 
+
+// getStaticProps is Next.Js function to render page at build time
+// check NextJs documentation for detailed information
 export const getStaticProps = async ({ params: { slug }}) => {
+
+  // the code fetches the product details slug and displays the first item/image uploaded
   const query = `*[_type == "product" && slug.current == '${slug}'][0]`;
+
+  // fetches all similar product
   const productsQuery = '*[_type == "product"]'
   
+  // fetches individual products
   const product = await client.fetch(query);
+
+  // fetches all similar products
   const products = await client.fetch(productsQuery);
 
   console.log(product);

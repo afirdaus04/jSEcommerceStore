@@ -14,10 +14,12 @@ import { StateContext } from '../context/StateContext';
 function MyApp({ Component, pageProps }) {
   return (
     <StateContext>
+{/* Wrapping components inside Layouts */}
       <Layout>
         <Toaster />
         <Component {...pageProps} />
       </Layout>
+    
     </StateContext>
   )
 }
