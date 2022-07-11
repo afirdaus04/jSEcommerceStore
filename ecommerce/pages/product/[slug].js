@@ -1,5 +1,5 @@
 // The folder is made is square brackets so it is dynamic
-
+// useState field to be utilised for image display on hover
 import React, { useState } from 'react';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
@@ -13,7 +13,11 @@ const ProductDetails = ({ product, products }) => {
 
   // Destructures props product
   const { image, name, details, price } = product;
+
+  // At start we would like to display image under the index of 0
   const [index, setIndex] = useState(0);
+
+  // Destructures properties and use the import
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
   const handleBuyNow = () => {
@@ -29,8 +33,11 @@ const ProductDetails = ({ product, products }) => {
           <div className="image-container">
 
             {/* If image exist, use image under specific index */}
+            {/* Image[index] utilize useState */}
             <img src={urlFor(image && image[index])} className="product-detail-image" />
           </div>
+
+          {/* fix on the main image display */}
           <div className="small-images-container">
 
             {/* mapping of image */}
@@ -38,7 +45,10 @@ const ProductDetails = ({ product, products }) => {
               <img 
                 key={i}
                 src={urlFor(item)}
+
+                // the function for image display on main frame
                 className={i === index ? 'small-image selected-image' : 'small-image'}
+
                 // Allows mouse on hover image on image and display to the main frame
                 onMouseEnter={() => setIndex(i)}
               />
@@ -86,7 +96,9 @@ const ProductDetails = ({ product, products }) => {
       <div className="maylike-products-wrapper">
           <h2>You may also like</h2>
           <div className="marquee">
+            {/* track moves the product left to right */}
             <div className="maylike-products-container track">
+
               {/* 1.37.18 - restudy */}
               {products.map((item) => (
                 <Product key={item._id} product={item} />

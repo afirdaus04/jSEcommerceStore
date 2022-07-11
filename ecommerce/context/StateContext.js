@@ -1,24 +1,45 @@
+
+// The StateContext is exported to the _app.js
+// Usage of Hooks
 import React, { createContext, useContext, useState, useEffect } from 'react';
+
+//import pop-up notification used when items are added into the cart
 import { toast } from 'react-hot-toast';
 
 const Context = createContext();
 
 export const StateContext = ({ children }) => {
+
+  // at the start we do not want to show the cart
   const [showCart, setShowCart] = useState(false);
+
+  // always want to know what items are in the cart
   const [cartItems, setCartItems] = useState([]);
+
+  // keep track of total price in cart
   const [totalPrice, setTotalPrice] = useState(0);
+
+  // keep track of total quantities of item
   const [totalQuantities, setTotalQuantities] = useState(0);
+
+  // to set quantity for individual items
   const [qty, setQty] = useState(1);
 
   let foundProduct;
   let index;
 
+  // 
   const onAdd = (product, quantity) => {
+
+    // check if product is already in cart
     const checkProductInCart = cartItems.find((item) => item._id === product._id);
     
+    // Adjust total price and quantity
     setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
     setTotalQuantities((prevTotalQuantities) => prevTotalQuantities + quantity);
     
+
+    // if product already in cart, update the quantity
     if(checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) => {
         if(cartProduct._id === product._id) return {
@@ -64,10 +85,12 @@ export const StateContext = ({ children }) => {
     }
   }
 
+  // increase quantity
   const incQty = () => {
     setQty((prevQty) => prevQty + 1);
   }
 
+  // decrease quantity with a logic that user cant decrease quantity lower than 1
   const decQty = () => {
     setQty((prevQty) => {
       if(prevQty - 1 < 1) return 1;
@@ -76,6 +99,8 @@ export const StateContext = ({ children }) => {
     });
   }
 
+
+  // Passing Values through one component by wrapper
   return (
     <Context.Provider
       value={{
@@ -100,4 +125,5 @@ export const StateContext = ({ children }) => {
   )
 }
 
+// The StateContext is exported to the _app.js
 export const useStateContext = () => useContext(Context);
