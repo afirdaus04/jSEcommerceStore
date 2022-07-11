@@ -19,7 +19,7 @@ export const StateContext = ({ children }) => {
   // keep track of total price in cart
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // keep track of total quantities of item
+  // keep track of total quantities of item - initial 0
   const [totalQuantities, setTotalQuantities] = useState(0);
 
   // to set quantity for individual items
@@ -42,14 +42,18 @@ export const StateContext = ({ children }) => {
     // if product already in cart, update the quantity
     if(checkProductInCart) {
       const updatedCartItems = cartItems.map((cartProduct) => {
-        if(cartProduct._id === product._id) return {
+        if(cartProduct._id === product._id) 
+        return {
           ...cartProduct,
           quantity: cartProduct.quantity + quantity
         }
       })
 
+
       setCartItems(updatedCartItems);
-    } else {
+    } 
+    
+    else {
       product.quantity = quantity;
       
       setCartItems([...cartItems, { ...product }]);

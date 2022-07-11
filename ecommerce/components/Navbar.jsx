@@ -21,6 +21,7 @@ const Navbar = () => {
         <span className="cart-item-qty">{totalQuantities}</span>
       </button>
 
+      {/* Cart logo */}
       {showCart && <Cart />}
     </div>
   )

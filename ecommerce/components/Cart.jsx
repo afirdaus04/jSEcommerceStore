@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Link from 'next/link';
-import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping } from 'react-icons/ai';
+import { AiOutlineMinus, AiOutlinePlus, AiOutlineLeft, AiOutlineShopping, AiOutlineRight } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import toast from 'react-hot-toast';
 
@@ -39,15 +39,17 @@ const Cart = () => {
         type="button"
         className="cart-heading"
         onClick={() => setShowCart(false)}>
-          <AiOutlineLeft />
+          <AiOutlineRight />
           <span className="heading">Your Cart</span>
-          <span className="cart-num-items">({totalQuantities} items)</span>
+          <span className="cart-num-items">({totalQuantities} Items in Cart)</span>
         </button>
 
+
+        {/* If the cart does not have any item, it will put a placeholder AiOutlineShopping */}
         {cartItems.length < 1 && (
           <div className="empty-cart">
             <AiOutlineShopping size={150} />
-            <h3>Your shopping bag is empty</h3>
+            <h3>Shopping cart is empty</h3>
             <Link href="/">
               <button
                 type="button"
@@ -60,6 +62,7 @@ const Cart = () => {
           </div>
         )}
 
+        {/* Occur when there are items inside the cart, in this case, the details changes accordingly */}
         <div className="product-container">
           {cartItems.length >= 1 && cartItems.map((item) => (
             <div className="product" key={item._id}>
@@ -69,6 +72,7 @@ const Cart = () => {
                   <h5>{item.name}</h5>
                   <h4>${item.price}</h4>
                 </div>
+
                 <div className="flex bottom">
                   <div>
                   <p className="quantity-desc">
@@ -78,6 +82,7 @@ const Cart = () => {
                     <span className="num" onClick="">{item.quantity}</span>
                     <span className="plus" onClick={() => toggleCartItemQuanitity(item._id, 'inc') }><AiOutlinePlus /></span>
                   </p>
+                  {/* 2.12.19 */}
                   </div>
                   <button
                     type="button"

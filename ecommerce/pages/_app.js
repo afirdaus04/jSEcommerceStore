@@ -2,7 +2,7 @@
 
 //  Start with Sanity to Manage Content "cd .\ecommerce\sanity_ecommerce\"
 //  To start app go into "ecommerce" folder "cd .\ecommerce\" then "npm run dev" and click "localhost:3000" on the CLI
-// To manage the products cd into sanity_ecommerce and run "sanity start" on the CLI
+// To manage the products cd into "sanity_ecommerce" and run "sanity start" on the CLI
 
 
 import React from 'react';
