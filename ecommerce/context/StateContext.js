@@ -25,6 +25,8 @@ export const StateContext = ({ children }) => {
   // to set quantity for individual items
   const [qty, setQty] = useState(1);
 
+
+  // variable for toggleCartItemQuanitity
   let foundProduct;
   let index;
 
@@ -62,15 +64,25 @@ export const StateContext = ({ children }) => {
     toast.success(`${qty} ${product.name} added to the cart.`);
   } 
 
+  // 
   const onRemove = (product) => {
     foundProduct = cartItems.find((item) => item._id === product._id);
+
+    // IMPORTANT NOTE: This method is non mutative and would properly add and not duplicate products
     const newCartItems = cartItems.filter((item) => item._id !== product._id);
 
     setTotalPrice((prevTotalPrice) => prevTotalPrice -foundProduct.price * foundProduct.quantity);
+
+    // when press X on cart, removes and adjust the quantity
     setTotalQuantities(prevTotalQuantities => prevTotalQuantities - foundProduct.quantity);
     setCartItems(newCartItems);
   }
 
+
+  // This function to update quantity
+  // 1. find the product we want to update - let "foundProduct"  and "index" variable are used
+  // 2. "foundProduct" logic
+  // 3. "index" logic is used once item is found
   const toggleCartItemQuanitity = (id, value) => {
     foundProduct = cartItems.find((item) => item._id === id)
     index = cartItems.findIndex((product) => product._id === id);

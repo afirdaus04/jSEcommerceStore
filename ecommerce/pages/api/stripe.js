@@ -11,15 +11,17 @@ export default async function handler(req, res) {
         payment_method_types: ['card'],
         billing_address_collection: 'auto',
         shipping_options: [
-          { shipping_rate: 'shr_1Kn3IaEnylLNWUqj5rqhg9oV' },
+          { shipping_rate: 'shr_1LMNooCUqB7SgCqzmGZcswFU' },
+          { shipping_rate: 'shr_1LMNpgCUqB7SgCqzb5suvF7x' },
         ],
+        // to modify each item to provide additioanl information (price, name, images)
         line_items: req.body.map((item) => {
           const img = item.image[0].asset._ref;
-          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/vfxfwnaw/production/').replace('-webp', '.webp');
+          const newImage = img.replace('image-', 'https://cdn.sanity.io/images/air5ut9z/production/').replace('-webp', '.webp');
 
           return {
             price_data: { 
-              currency: 'usd',
+              currency: 'USD',
               product_data: { 
                 name: item.name,
                 images: [newImage],
@@ -41,6 +43,8 @@ export default async function handler(req, res) {
       const session = await stripe.checkout.sessions.create(params);
 
       res.status(200).json(session);
+
+      // IF the session has error, then error message is displayed
     } catch (err) {
       res.status(err.statusCode || 500).json(err.message);
     }

@@ -12,9 +12,12 @@ const Cart = () => {
   const cartRef = useRef();
   const { totalPrice, totalQuantities, cartItems, setShowCart, toggleCartItemQuanitity, onRemove } = useStateContext();
 
+
+  // creating request to backend
   const handleCheckout = async () => {
     const stripe = await getStripe();
 
+    // make our API request to backend to next.js
     const response = await fetch('/api/stripe', {
       method: 'POST',
       headers: {
@@ -23,6 +26,7 @@ const Cart = () => {
       body: JSON.stringify(cartItems),
     });
 
+    // if error, return error message
     if(response.statusCode === 500) return;
     
     const data = await response.json();
@@ -72,7 +76,7 @@ const Cart = () => {
                   <h5>{item.name}</h5>
                   <h4>${item.price}</h4>
                 </div>
-
+                {/* Incrementing and decrementing the number of items in the cart - these codes display on the opened sidebar*/}
                 <div className="flex bottom">
                   <div>
                   <p className="quantity-desc">
@@ -82,7 +86,7 @@ const Cart = () => {
                     <span className="num" onClick="">{item.quantity}</span>
                     <span className="plus" onClick={() => toggleCartItemQuanitity(item._id, 'inc') }><AiOutlinePlus /></span>
                   </p>
-                  {/* 2.12.19 */}
+                  
                   </div>
                   <button
                     type="button"
@@ -96,15 +100,16 @@ const Cart = () => {
             </div>
           ))}
         </div>
+        {/* Button for cart sidebar */}
         {cartItems.length >= 1 && (
           <div className="cart-bottom">
             <div className="total">
               <h3>Subtotal:</h3>
-              <h3>${totalPrice}</h3>
+              <h3>RM {totalPrice}</h3>
             </div>
             <div className="btn-container">
               <button type="button" className="btn" onClick={handleCheckout}>
-                Pay with Stripe
+                Proceed to Pay
               </button>
             </div>
           </div>
