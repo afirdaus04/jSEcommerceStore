@@ -5,9 +5,11 @@ import { BsBagCheckFill } from 'react-icons/bs';
 import { useStateContext } from '../context/StateContext';
 import { runFireworks } from '../lib/utils';
 
+// Success Page after purchase
 const Success = () => {
   const { setCartItems, setTotalPrice, setTotalQuantities } = useStateContext();
   
+  // Reset cart items and run fireworks - [] This array causes this command to execute immediately after page is loaded
   useEffect(() => {
     localStorage.clear();
     setCartItems([]);
@@ -26,8 +28,8 @@ const Success = () => {
         <p className="email-msg">Check your email inbox for the receipt.</p>
         <p className="description">
           If you have any questions, please email
-          <a className="email" href="mailto:order@example.com">
-            order@example.com
+          <a className="email" href="mailto:afirdaus.pe@gmail.com">
+            Customer Support
           </a>
         </p>
         <Link href="/">
