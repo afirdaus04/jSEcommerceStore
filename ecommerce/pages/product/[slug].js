@@ -20,6 +20,7 @@ const ProductDetails = ({ product, products }) => {
   // Destructures properties and use the import
   const { decQty, incQty, qty, onAdd, setShowCart } = useStateContext();
 
+  // Buy and opens up the cart for ready to purchase
   const handleBuyNow = () => {
     onAdd(product, qty);
 
